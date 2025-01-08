@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>投票サイト</title>
-  <link rel="stylesheet" href="style.css">
+  <title>4択クイズ</title>
 </head>
 <body>
-  <h1>投票してください</h1>
-  <p>好きな色は何ですか？</p>
-  <button onclick="vote('Red')">赤</button>
-  <button onclick="vote('Blue')">青</button>
-  <button onclick="vote('Green')">緑</button>
+  <h1>4択クイズ</h1>
+  <p>好きな選択肢を選んでください：</p>
+  <button onclick="vote('A')">A</button>
+  <button onclick="vote('B')">B</button>
+  <button onclick="vote('C')">C</button>
+  <button onclick="vote('D')">D</button>
 
-  <h2>現在の投票結果</h2>
-  <div id="results">
-    <p>まだ投票がありません。</p>
-  </div>
+  <p id="message"></p>
 
-  <script src="script.js"></script>
+  <script>
+    const scriptURL = 'YOUR_APPS_SCRIPT_WEB_APP_URL';
+
+    function vote(choice) {
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify({ choice }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('message').innerText = "投票ありがとうございました！";
+        })
+        .catch(error => console.error('Error!', error));
+    }
+  </script>
 </body>
 </html>
