@@ -28,19 +28,28 @@
 
       fetch(scriptURL, {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nickname, choice }),
       })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then(data => {
           document.getElementById('message').innerText = "投票ありがとうございました！";
           displayResults(data); // 結果を表示
         })
-        .catch(error => console.error('Error!', error));
+        .catch(error => {
+          console.error('Error!', error);
+          alert('エラーが発生しました。後ほど再試行してください。');
+        });
     }
 
     function displayResults(results) {
       const resultsDiv = document.getElementById('message');
-      resultsDiv.innerHTML += `
+      resultsDiv.innerHTML = `
         <p>現在の投票結果:</p>
         <p>A: ${results.A || 0}票</p>
         <p>B: ${results.B || 0}票</p>
