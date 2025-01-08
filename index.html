@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Web App</title>
-    <link rel="stylesheet" href="style.css">
+  <title>投票サイト</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Hello, GitHub Pages!</h1>
-    <button onclick="alert('Welcome!')">Click Me</button>
-    <script src="script.js"></script>
+  <h1>投票してください</h1>
+  <p>好きな色は何ですか？</p>
+  <button onclick="vote('Red')">赤</button>
+  <button onclick="vote('Blue')">青</button>
+  <button onclick="vote('Green')">緑</button>
+
+  <h2>現在の投票結果</h2>
+  <div id="results">
+    <p>まだ投票がありません。</p>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
