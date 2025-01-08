@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>投票結果</title>
+</head>
+<body>
+  <h1>投票結果</h1>
+  <div id="results">
+    <p>A: <span id="resultA">0</span>票</p>
+    <p>B: <span id="resultB">0</span>票</p>
+    <p>C: <span id="resultC">0</span>票</p>
+    <p>D: <span id="resultD">0</span>票</p>
+  </div>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyOP1ovz6ue8HltwQUKKVzLr1NqXRBjIy70W6_DvDWkA_gTIXjLZtVj1a9GBd-BDzzW9A/exec';
+
+    function fetchResults() {
+      fetch(scriptURL)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('resultA').innerText = data['A'];
+          document.getElementById('resultB').innerText = data['B'];
+          document.getElementById('resultC').innerText = data['C'];
+          document.getElementById('resultD').innerText = data['D'];
+        })
+        .catch(error => console.error('Error!', error));
+    }
+
+    // ページ読み込み時に結果を取得
+    fetchResults();
+    // 5秒ごとに更新
+    setInterval(fetchResults, 5000);
+  </script>
+</body>
+</html>
