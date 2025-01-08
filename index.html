@@ -5,9 +5,7 @@
 </head>
 <body>
   <h1>4択クイズ</h1>
-  <p>ニックネームを入力してください：</p>
-  <input type="text" id="nickname" placeholder="例: Alice">
-  <p>以下の選択肢から1つ選んでください：</p>
+  <p>好きな選択肢を選んでください：</p>
   <button onclick="vote('A')">A</button>
   <button onclick="vote('B')">B</button>
   <button onclick="vote('C')">C</button>
@@ -16,46 +14,18 @@
   <p id="message"></p>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyOP1ovz6ue8HltwQUKKVzLr1NqXRBjIy70W6_DvDWkA_gTIXjLZtVj1a9GBd-BDzzW9A/exec'; // WebアプリURLをここに記入
+    const scriptURL = 'YOUR_APPS_SCRIPT_WEB_APP_URL';
 
     function vote(choice) {
-      const nickname = document.getElementById('nickname').value;
-
-      if (!nickname) {
-        alert("ニックネームを入力してください！");
-        return;
-      }
-
       fetch(scriptURL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nickname, choice }),
+        body: JSON.stringify({ choice }),
       })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
           document.getElementById('message').innerText = "投票ありがとうございました！";
-          displayResults(data); // 結果を表示
         })
-        .catch(error => {
-          console.error('Error!', error);
-          alert('エラーが発生しました。後ほど再試行してください。');
-        });
-    }
-
-    function displayResults(results) {
-      const resultsDiv = document.getElementById('message');
-      resultsDiv.innerHTML = `
-        <p>現在の投票結果:</p>
-        <p>A: ${results.A || 0}票</p>
-        <p>B: ${results.B || 0}票</p>
-        <p>C: ${results.C || 0}票</p>
-        <p>D: ${results.D || 0}票</p>
-      `;
+        .catch(error => console.error('Error!', error));
     }
   </script>
 </body>
