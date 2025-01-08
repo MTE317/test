@@ -17,23 +17,14 @@
 
     function fetchResults() {
       fetch(scriptURL)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-          // データが存在しない場合のフォールバック
-          document.getElementById('resultA').innerText = data['A'] || 0;
-          document.getElementById('resultB').innerText = data['B'] || 0;
-          document.getElementById('resultC').innerText = data['C'] || 0;
-          document.getElementById('resultD').innerText = data['D'] || 0;
+          document.getElementById('resultA').innerText = data['A'];
+          document.getElementById('resultB').innerText = data['B'];
+          document.getElementById('resultC').innerText = data['C'];
+          document.getElementById('resultD').innerText = data['D'];
         })
-        .catch(error => {
-          console.error('Error fetching results!', error);
-          alert('投票結果の取得に失敗しました。');
-        });
+        .catch(error => console.error('Error!', error));
     }
 
     // ページ読み込み時に結果を取得
